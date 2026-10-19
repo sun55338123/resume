@@ -1,0 +1,1512 @@
+<!doctype html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Huang Yu-xiang 的軟體工程師作品集，涵蓋 ASP.NET Core、Vue 3、Laravel、裝置管理與系統部署。">
+    <meta name="theme-color" content="#f7f8f2">
+    <title>Huang Yu-xiang | 軟體工程師作品集</title>
+    <style>
+        :root {
+            --bg: #f7f8f2;
+            --ink: #18362b;
+            --muted: #69756c;
+            --line: #dce2d7;
+            --green: #d8f283;
+            --paper: #fff;
+            --dark: #18362b
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+            -webkit-font-smoothing: antialiased
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer
+        }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        summary:focus-visible {
+            outline: 3px solid #61912d;
+            outline-offset: 5px
+        }
+
+        ::selection {
+            background: var(--green)
+        }
+
+        .wrap {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 40px
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: #f7f8f2f2;
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--line)
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 86px
+        }
+
+        .brand {
+            font-size: 20px;
+            font-weight: 750;
+            letter-spacing: -.7px
+        }
+
+        .brand b {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            align-items: center;
+            justify-content: center;
+            background: var(--ink);
+            color: var(--green);
+            border-radius: 50%;
+            margin-right: 9px;
+            font-size: 14px
+        }
+
+        .navlinks {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            font-size: 13px;
+            font-weight: 600
+        }
+
+        .navlinks a:hover {
+            color: #62852b
+        }
+
+        .navlinks .navcta {
+            border: 1px solid #aab8a6;
+            padding: 11px 17px;
+            border-radius: 6px
+        }
+
+        .menu {
+            display: none;
+            border: 1px solid var(--line);
+            background: transparent;
+            padding: 9px 12px;
+            border-radius: 5px
+        }
+
+        .eyebrow {
+            font: 11px/1.5 monospace;
+            letter-spacing: 2px;
+            color: var(--muted);
+            text-transform: uppercase
+        }
+
+        .hero {
+            padding-top: 77px;
+            padding-bottom: 67px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 60px;
+            align-items: center
+        }
+
+        .badge {
+            display: inline-flex;
+            gap: 9px;
+            align-items: center;
+            font-size: 12px;
+            border: 1px solid var(--line);
+            padding: 9px 12px;
+            border-radius: 30px
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: #6c942e;
+            border-radius: 50%
+        }
+
+        h1 {
+            font-size: clamp(38px, 4.1vw, 58px);
+            line-height: 1.3;
+            letter-spacing: -2.4px;
+            margin: 25px 0 21px;
+            font-weight: 750
+        }
+
+        h1 em {
+            font-style: normal;
+            position: relative;
+            z-index: 0
+        }
+
+        h1 em:after {
+            content: "";
+            position: absolute;
+            bottom: 3px;
+            left: -3px;
+            right: -5px;
+            height: 15px;
+            background: var(--green);
+            z-index: -1;
+            transform: rotate(-1deg)
+        }
+
+        .hero p {
+            font-size: 15px;
+            line-height: 1.95;
+            color: var(--muted);
+            max-width: 480px
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            align-items: center
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            border: 1px solid var(--line);
+            padding: 14px 20px;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: 600;
+            background: transparent
+        }
+
+        .btn.primary {
+            background: var(--ink);
+            color: white;
+            border-color: var(--ink)
+        }
+
+        .btn:hover {
+            transform: translateY(-2px)
+        }
+
+        .herofoot {
+            margin-top: 35px;
+            display: flex;
+            gap: 9px;
+            align-items: center;
+            color: var(--muted);
+            font-size: 11px
+        }
+
+        .herofoot span {
+            height: 1px;
+            width: 25px;
+            background: #9aab96
+        }
+
+        .architecture {
+            position: relative;
+            background: #e9eee2;
+            border: 1px solid #dae2d1;
+            border-radius: 14px;
+            padding: 22px;
+            transform: rotate(1deg);
+            box-shadow: 8px 12px 0 #e1e8d7
+        }
+
+        .windowbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font: 10px monospace;
+            color: #73816c;
+            margin-bottom: 25px
+        }
+
+        .lights {
+            display: flex;
+            gap: 5px
+        }
+
+        .lights i {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #b8c6ac
+        }
+
+        .archbody {
+            padding: 4px 16px 10px
+        }
+
+        .archtitle {
+            font: 11px monospace;
+            color: #73816c;
+            margin-bottom: 18px
+        }
+
+        .node {
+            background: #fbfcf7;
+            border: 1px solid #cad5c0;
+            border-radius: 7px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 13px
+        }
+
+        .node .symbol {
+            background: #edf2e5;
+            border: 1px solid #dce6d0;
+            border-radius: 6px;
+            padding: 9px;
+            font: 16px monospace
+        }
+
+        .node strong {
+            font-size: 13px;
+            display: block
+        }
+
+        .node small {
+            font: 10px/1.7 monospace;
+            color: #839078;
+            display: block
+        }
+
+        .connector {
+            height: 29px;
+            width: 1px;
+            background: #adbe9c;
+            margin: auto;
+            position: relative
+        }
+
+        .connector:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: -3px;
+            width: 6px;
+            height: 6px;
+            border-bottom: 1px solid #8a9d7b;
+            border-right: 1px solid #8a9d7b;
+            transform: rotate(45deg)
+        }
+
+        .node.api {
+            background: var(--ink);
+            color: white;
+            border-color: var(--ink)
+        }
+
+        .node.api .symbol {
+            background: #2f4b3e;
+            border-color: #4d6654;
+            color: var(--green)
+        }
+
+        .node.api small {
+            color: #b7c5ad
+        }
+
+        .archbottom {
+            display: flex;
+            gap: 10px
+        }
+
+        .archbottom .node {
+            flex: 1;
+            padding: 12px;
+            gap: 8px
+        }
+
+        .archbottom .node strong {
+            font-size: 11px
+        }
+
+        .archnote {
+            font: 9px/1.6 monospace;
+            color: #7c8d6f;
+            margin-top: 20px
+        }
+
+        .floating {
+            position: absolute;
+            right: -22px;
+            bottom: 53px;
+            background: var(--green);
+            padding: 11px 16px;
+            border-radius: 6px;
+            font: 11px monospace;
+            transform: rotate(-5deg);
+            box-shadow: 0 4px 10px #18362b12
+        }
+
+        .skillstrip {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 22px;
+            padding: 24px 0;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            font: 12px monospace;
+            color: #63705d
+        }
+
+        .skillstrip span:first-child {
+            font-size: 10px;
+            color: #8b9586;
+            letter-spacing: 1px
+        }
+
+        .section {
+            padding-top: 91px;
+            padding-bottom: 10px
+        }
+
+        .sectionhead {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 30px
+        }
+
+        .section h2 {
+            font-size: 32px;
+            letter-spacing: -1px;
+            margin: 10px 0 0
+        }
+
+        .sectionhead p {
+            font-size: 13px;
+            color: var(--muted);
+            max-width: 310px;
+            line-height: 1.8;
+            margin: 0
+        }
+
+        .filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 25px
+        }
+
+        .filter {
+            border: 1px solid var(--line);
+            border-radius: 30px;
+            padding: 9px 17px;
+            font-size: 12px;
+            background: transparent;
+            color: var(--muted)
+        }
+
+        .filter[aria-pressed="true"] {
+            background: var(--ink);
+            color: white;
+            border-color: var(--ink)
+        }
+
+        .projects {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 26px
+        }
+
+        .project {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 9px;
+            overflow: hidden;
+            transition: transform .2s, box-shadow .2s
+        }
+
+        .project:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px #18362b0b
+        }
+
+        .project[hidden] {
+            display: none
+        }
+
+        .projectart {
+            height: 235px;
+            padding: 28px 35px;
+            position: relative;
+            overflow: hidden;
+            background: #e9eee4;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .artlabel {
+            position: absolute;
+            left: 17px;
+            bottom: 12px;
+            font-size: 9px;
+            letter-spacing: 1px;
+            color: #71816c
+        }
+
+        .mockwindow {
+            width: 100%;
+            max-width: 360px;
+            background: #fcfdf9;
+            border: 1px solid #cfdbca;
+            border-radius: 6px;
+            box-shadow: 0 12px 24px #17362a10;
+            transform: perspective(700px) rotateY(-5deg) rotateX(3deg);
+            overflow: hidden
+        }
+
+        .mocktop {
+            height: 25px;
+            border-bottom: 1px solid #e4e9df;
+            padding: 9px;
+            font: 7px monospace;
+            color: #8e9d85
+        }
+
+        .mockcontent {
+            display: flex;
+            height: 145px
+        }
+
+        .sidebar {
+            width: 55px;
+            background: #224331;
+            padding: 12px 8px
+        }
+
+        .sidebar i {
+            display: block;
+            height: 4px;
+            margin: 10px 0;
+            background: #5c7860;
+            width: 70%
+        }
+
+        .sidebar i:first-child {
+            background: var(--green);
+            width: 90%
+        }
+
+        .mockmain {
+            padding: 13px;
+            flex: 1
+        }
+
+        .mockmain .label {
+            font-size: 9px;
+            font-weight: bold
+        }
+
+        .metrics {
+            display: flex;
+            gap: 6px;
+            margin: 10px 0
+        }
+
+        .metric {
+            height: 35px;
+            flex: 1;
+            background: #edf3e6;
+            border: 1px solid #dfe7d8;
+            border-radius: 3px;
+            padding: 7px;
+            font: 8px monospace
+        }
+
+        .metric b {
+            display: block;
+            font-size: 11px
+        }
+
+        .rows i {
+            display: block;
+            height: 9px;
+            border-bottom: 1px solid #e5eadd;
+            margin: 5px 0
+        }
+
+        .pos {
+            background: #e9e9e2
+        }
+
+        .pos .sidebar {
+            background: #575b40
+        }
+
+        .pos .metric {
+            height: 48px;
+            background: #f0eee0
+        }
+
+        .broadcast {
+            background: #e3eae8
+        }
+
+        .flow {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: rotate(-3deg)
+        }
+
+        .flowbox {
+            text-align: center;
+            background: #f8fcf9;
+            border: 1px solid #bdcec3;
+            padding: 22px 17px;
+            border-radius: 9px;
+            box-shadow: 0 6px 0 #cddbd1;
+            font-size: 12px
+        }
+
+        .flowbox b {
+            display: block;
+            font-size: 26px;
+            margin-bottom: 9px
+        }
+
+        .flowline {
+            width: 25px;
+            height: 1px;
+            background: #91a99a
+        }
+
+        .webart {
+            background: #eee8df
+        }
+
+        .webmock {
+            background: #faf7f0;
+            border: 1px solid #d9d0be;
+            width: 80%;
+            padding: 15px;
+            transform: rotate(-4deg);
+            box-shadow: 10px 10px 0 #ddd5c5
+        }
+
+        .webmock span {
+            font: 8px monospace;
+            letter-spacing: 2px
+        }
+
+        .webmock .gallery {
+            display: flex;
+            align-items: end;
+            gap: 8px;
+            margin: 18px 0 8px
+        }
+
+        .gallery i {
+            flex: 1;
+            height: 65px;
+            background: #9b9c82
+        }
+
+        .gallery i:nth-child(2) {
+            height: 90px;
+            background: #bbac8c
+        }
+
+        .gallery i:nth-child(3) {
+            height: 76px;
+            background: #7c8e7d
+        }
+
+        .webmock b {
+            font: 17px Georgia, serif
+        }
+
+        .projectbody {
+            padding: 23px 25px
+        }
+
+        .projectmeta {
+            font: 10px monospace;
+            color: #79876f;
+            letter-spacing: 1px
+        }
+
+        .project h3 {
+            font-size: 21px;
+            letter-spacing: -.6px;
+            margin: 10px 0
+        }
+
+        .project p {
+            font-size: 13px;
+            line-height: 1.9;
+            color: var(--muted);
+            margin: 0 0 18px
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px
+        }
+
+        .tags span {
+            font: 10px monospace;
+            padding: 5px 8px;
+            background: #f3f5ee;
+            border-radius: 3px;
+            color: #5b6d54
+        }
+
+        .projectbottom {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #eef0e9;
+            margin-top: 19px;
+            padding-top: 15px;
+            align-items: center;
+            color: #8d9886;
+            font-size: 10px
+        }
+
+        .detailbtn {
+            background: none;
+            border: 0;
+            color: var(--ink);
+            font-size: 12px;
+            padding: 4px 0
+        }
+
+        .otherlinks {
+            margin-top: 23px;
+            display: flex;
+            gap: 19px;
+            flex-wrap: wrap;
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        .otherlinks a {
+            text-decoration: underline;
+            text-underline-offset: 4px
+        }
+
+        .experience {
+            display: grid;
+            grid-template-columns: .8fr 1.6fr;
+            gap: 60px
+        }
+
+        .experience .sectionhead {
+            display: block
+        }
+
+        .experience .sectionhead p {
+            margin-top: 23px
+        }
+
+        .timeline {
+            border-top: 1px solid var(--line)
+        }
+
+        .job {
+            padding: 27px 0;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .jobtop {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: center
+        }
+
+        .job h3 {
+            font-size: 19px;
+            margin: 0
+        }
+
+        .jobtop span {
+            font-size: 10px;
+            color: var(--muted)
+        }
+
+        .current {
+            color: #527a28 !important;
+            background: #e7efda;
+            padding: 5px 9px;
+            border-radius: 3px
+        }
+
+        .jobtitle {
+            font-size: 12px;
+            margin: 9px 0 14px;
+            color: #7b8772
+        }
+
+        .job p {
+            font-size: 13px;
+            line-height: 1.95;
+            color: var(--muted);
+            margin: 0 0 13px
+        }
+
+        .capabilities {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            margin-top: 30px;
+            overflow: hidden
+        }
+
+        .capability {
+            padding: 25px 22px;
+            border-right: 1px solid var(--line)
+        }
+
+        .capability:last-child {
+            border: 0
+        }
+
+        .capability .num {
+            font: 10px monospace;
+            color: #839477
+        }
+
+        .capability h3 {
+            font-size: 16px;
+            margin: 20px 0 13px
+        }
+
+        .capability p {
+            font-size: 12px;
+            line-height: 2;
+            color: var(--muted);
+            margin: 0
+        }
+
+        .about {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 65px;
+            margin-top: 88px;
+            padding: 42px;
+            background: #edf1e6;
+            border-radius: 9px
+        }
+
+        .about h2 {
+            font-size: 27px
+        }
+
+        .about p {
+            font-size: 13px;
+            line-height: 2;
+            color: var(--muted)
+        }
+
+        .about .principles {
+            display: flex;
+            gap: 8px;
+            margin-top: 23px;
+            flex-wrap: wrap
+        }
+
+        .principles span {
+            font: 10px monospace;
+            background: #fcfdf8;
+            padding: 7px 10px;
+            border: 1px solid var(--line);
+            border-radius: 4px
+        }
+
+        details {
+            border-bottom: 1px solid #d7dfcf;
+            padding: 18px 0;
+            font-size: 13px
+        }
+
+        details:first-child {
+            padding-top: 0
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: 600
+        }
+
+        details ul {
+            font-size: 12px;
+            line-height: 2.2;
+            color: var(--muted);
+            padding-left: 18px;
+            margin-bottom: 0
+        }
+
+        .contact {
+            padding: 77px 0 61px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px
+        }
+
+        .contact h2 {
+            font-size: 36px;
+            letter-spacing: -1.4px;
+            margin: 12px 0
+        }
+
+        .contact p {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.9
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            border-top: 1px solid var(--line);
+            padding: 22px 0 30px;
+            font: 10px monospace;
+            color: #8b9685
+        }
+
+        .footer a {
+            text-decoration: underline;
+            text-underline-offset: 4px
+        }
+
+        dialog {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 36px;
+            max-width: 620px;
+            width: calc(100% - 32px);
+            background: var(--bg);
+            color: var(--ink);
+            max-height: 85vh
+        }
+
+        dialog::backdrop {
+            background: #102b2266;
+            backdrop-filter: blur(5px)
+        }
+
+        .dialogclose {
+            position: absolute;
+            right: 15px;
+            top: 12px;
+            background: none;
+            border: 0;
+            font-size: 23px;
+            color: var(--muted)
+        }
+
+        dialog h2 {
+            font-size: 27px;
+            margin: 16px 0 20px
+        }
+
+        dialog h3 {
+            font-size: 13px;
+            margin-top: 25px
+        }
+
+        dialog p {
+            font-size: 14px;
+            line-height: 1.95;
+            color: var(--muted)
+        }
+
+        .dialoglinks {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 25px
+        }
+
+        .dialoglinks a {
+            font-size: 12px;
+            text-decoration: underline;
+            text-underline-offset: 4px
+        }
+
+        @media(min-width:1500px) {
+            .hero {
+                padding-top: 100px;
+                padding-bottom: 90px
+            }
+        }
+
+        @media(max-width:900px) {
+            .wrap {
+                padding: 0 25px
+            }
+
+            .hero {
+                gap: 35px
+            }
+
+            .archbody {
+                padding: 0
+            }
+
+            .floating {
+                right: -10px
+            }
+
+            .archbottom .symbol {
+                display: none
+            }
+
+            .navlinks {
+                gap: 20px
+            }
+
+            .experience {
+                gap: 35px
+            }
+
+            .capabilities {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .capability:nth-child(2) {
+                border-right: 0
+            }
+
+            .capability:nth-child(-n+2) {
+                border-bottom: 1px solid var(--line)
+            }
+
+            .projectart {
+                padding: 23px
+            }
+
+            .flow {
+                gap: 8px
+            }
+
+            .flowbox {
+                padding: 18px 12px
+            }
+
+            .flowline {
+                width: 12px
+            }
+
+            .about {
+                gap: 30px;
+                padding: 30px
+            }
+        }
+
+        @media(max-width:650px) {
+            .nav {
+                height: 70px
+            }
+
+            .brand {
+                font-size: 17px
+            }
+
+            .menu {
+                display: block
+            }
+
+            .navlinks {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                padding: 22px;
+                background: var(--bg);
+                border-bottom: 1px solid var(--line);
+                flex-direction: column;
+                align-items: stretch
+            }
+
+            .navlinks.open {
+                display: flex
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 42px;
+                padding-bottom: 38px;
+                gap: 38px
+            }
+
+            h1 {
+                font-size: 41px;
+                letter-spacing: -2px
+            }
+
+            .hero p {
+                font-size: 14px
+            }
+
+            .architecture {
+                margin: 0 12px 12px 0;
+                max-width: 460px
+            }
+
+            .archbody {
+                padding: 4px 12px 10px
+            }
+
+            .archbottom .symbol {
+                display: block
+            }
+
+            .herofoot {
+                margin-top: 25px
+            }
+
+            .skillstrip {
+                justify-content: flex-start;
+                gap: 18px;
+                font-size: 10px
+            }
+
+            .skillstrip span:first-child {
+                width: 100%
+            }
+
+            .section {
+                padding-top: 58px
+            }
+
+            .sectionhead {
+                display: block
+            }
+
+            .sectionhead p {
+                margin-top: 16px
+            }
+
+            .section h2 {
+                font-size: 28px
+            }
+
+            .projects {
+                grid-template-columns: 1fr
+            }
+
+            .projectart {
+                height: 220px
+            }
+
+            .experience {
+                display: block
+            }
+
+            .experience .sectionhead p {
+                margin-top: 16px;
+                max-width: none
+            }
+
+            .capability {
+                padding: 20px 15px
+            }
+
+            .capability h3 {
+                font-size: 14px
+            }
+
+            .capability p {
+                font-size: 11px
+            }
+
+            .about {
+                grid-template-columns: 1fr;
+                margin-top: 55px;
+                padding: 24px;
+                gap: 20px
+            }
+
+            .contact {
+                display: block;
+                padding: 55px 0 35px
+            }
+
+            .contact h2 {
+                font-size: 31px
+            }
+
+            .contact .btn {
+                margin-top: 10px
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 12px
+            }
+
+            .jobtop {
+                gap: 10px
+            }
+
+            .job h3 {
+                font-size: 18px
+            }
+
+            dialog {
+                padding: 27px
+            }
+
+            .floating {
+                bottom: 42px
+            }
+
+            .otherlinks {
+                gap: 14px
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            html {
+                scroll-behavior: auto
+            }
+
+            * {
+                transition: none !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="wrap nav"><a class="brand" href="#home" aria-label="回到首頁"><b>Y.</b>Yu-xiang<span
+                    style="color:#87977c"> / </span>Portfolio</a><button class="menu" aria-expanded="false"
+                aria-controls="navigation">選單 ☰</button>
+            <nav class="navlinks" id="navigation" aria-label="主要導覽"><a href="#projects">精選專案</a><a
+                    href="#experience">工作經歷</a><a href="#about">關於我</a><a class="navcta" href="#contact">進一步認識 ↗</a>
+            </nav>
+        </div>
+    </header>
+    <main id="home" class="wrap">
+        <section class="hero" aria-labelledby="hero-title">
+            <div>
+                <div class="badge"><span class="dot"></span> Software Engineer · Taiwan</div>
+                <h1 id="hero-title">從需求出發，<br>讓想法成為<br><em>穩定運作的系統。</em></h1>
+                <p>我是 Huang Yu-xiang，一名軟體工程師。<br>專注於後端系統與管理平台開發，串起需求規劃、前端介面與部署，將複雜的流程轉化為實際可用的產品。</p>
+                <div class="actions"><a class="btn primary" href="#projects">探索我的專案 <span>↗</span></a><a class="btn"
+                        href="#experience">查看工作經歷 <span>↓</span></a></div>
+                <div class="herofoot"><span></span> ASP.NET Core / Vue 3 / Azure / Laravel</div>
+            </div>
+            <div class="architecture" role="img" aria-label="能力示意圖：管理介面串接後端API，再連接資料庫與容器部署環境，並非實際專案架構">
+                <div class="windowbar">
+                    <div class="lights"><i></i><i></i><i></i></div><span>FROM IDEA TO SYSTEM</span><span>↗</span>
+                </div>
+                <div class="archbody">
+                    <div class="archtitle">// connecting the pieces</div>
+                    <div class="node"><span class="symbol">&lt;/&gt;</span>
+                        <div><strong>讓操作直覺的管理介面</strong><small>Vue 3 · TypeScript</small></div>
+                    </div>
+                    <div class="connector"></div>
+                    <div class="node api"><span class="symbol">{ }</span>
+                        <div><strong>承接業務邏輯的後端服務</strong><small>ASP.NET Core · RESTful API</small></div>
+                    </div>
+                    <div class="connector"></div>
+                    <div class="archbottom">
+                        <div class="node"><span class="symbol">▤</span>
+                            <div><strong>資料與流程</strong><small>SQL Server</small></div>
+                        </div>
+                        <div class="node"><span class="symbol">▦</span>
+                            <div><strong>部署與交付</strong><small>Azure · Docker</small></div>
+                        </div>
+                    </div>
+                    <div class="archnote">能力示意 / FRONTEND → BACKEND → DEPLOYMENT</div>
+                </div>
+                <div class="floating">Built with a system mindset.</div>
+            </div>
+        </section>
+        <div class="skillstrip" aria-label="主要使用技術"><span>MY TOOLKIT</span><span>ASP.NET Core</span><span>Vue 3 &
+                TypeScript</span><span>Laravel</span><span>SQL Server</span><span>Docker & Azure</span></div>
+        <section class="section" id="projects">
+            <div class="sectionhead">
+                <div>
+                    <div class="eyebrow">01 / SELECTED WORK</div>
+                    <h2>用專案，說明我的能力。</h2>
+                </div>
+                <p>從裝置管理到日常營運，<br>讓技術回應真實的使用需求。</p>
+            </div>
+            <div class="filters" aria-label="專案分類"><button class="filter" data-filter="all"
+                    aria-pressed="true">全部專案</button><button class="filter" data-filter="system"
+                    aria-pressed="false">系統平台</button><button class="filter" data-filter="integration"
+                    aria-pressed="false">應用整合</button><button class="filter" data-filter="web"
+                    aria-pressed="false">網站開發</button></div>
+            <div class="projects">
+                <article class="project" data-category="system">
+                    <div class="projectart" aria-hidden="true">
+                        <div class="mockwindow">
+                            <div class="mocktop">● ● ●　 DEVICE & CONTENT MANAGER</div>
+                            <div class="mockcontent">
+                                <div class="sidebar"><i></i><i></i><i></i><i></i></div>
+                                <div class="mockmain">
+                                    <div class="label">裝置管理 / Overview</div>
+                                    <div class="metrics">
+                                        <div class="metric">DEVICES<b>◉</b></div>
+                                        <div class="metric">CONTENT<b>▦</b></div>
+                                        <div class="metric">TELEMETRY<b>⌁</b></div>
+                                    </div>
+                                    <div class="rows"><i></i><i></i><i></i><i></i></div>
+                                </div>
+                            </div>
+                        </div><span class="artlabel">介面概念示意 · 非實際產品畫面</span>
+                    </div>
+                    <div class="projectbody">
+                        <div class="projectmeta">01 — DEVICE & CONTENT MANAGEMENT</div>
+                        <h3>裝置與內容管理平台</h3>
+                        <p>參與裝置管理、內容管理與資料同步相關專案，從需求討論、資料流程到前後端開發與部署。</p>
+                        <div class="tags"><span>ASP.NET Core</span><span>Vue 3</span><span>SQL
+                                Server</span><span>Azure</span></div>
+                        <div class="projectbottom"><span>龍星顯示科技 · 團隊專案</span><button class="detailbtn"
+                                data-project="device">查看專案介紹 ↗</button></div>
+                    </div>
+                </article>
+                <article class="project" data-category="system">
+                    <div class="projectart pos" aria-hidden="true">
+                        <div class="mockwindow">
+                            <div class="mocktop">● ● ●　 OPERATIONS / POS</div>
+                            <div class="mockcontent">
+                                <div class="sidebar"><i></i><i></i><i></i><i></i></div>
+                                <div class="mockmain">
+                                    <div class="label">營運管理 / Workspace</div>
+                                    <div class="metrics">
+                                        <div class="metric">營運流程<b>▤</b></div>
+                                        <div class="metric">資料管理<b>▦</b></div>
+                                        <div class="metric">系統整合<b>⇄</b></div>
+                                    </div>
+                                    <div class="rows"><i></i><i></i><i></i></div>
+                                </div>
+                            </div>
+                        </div><span class="artlabel">介面概念示意 · 非實際產品畫面</span>
+                    </div>
+                    <div class="projectbody">
+                        <div class="projectmeta">02 — BUSINESS APPLICATION</div>
+                        <h3>雲端釣蝦場管理系統</h3>
+                        <p>外包專案經驗之一，將使用者的營運需求整理為系統開發方向，結合需求溝通與專案交付。</p>
+                        <div class="tags"><span>需求分析</span><span>管理系統</span><span>外包專案</span></div>
+                        <div class="projectbottom"><span>專案作品 · 營運管理</span><button class="detailbtn"
+                                data-project="pos">查看專案介紹 ↗</button></div>
+                    </div>
+                </article>
+                <article class="project" data-category="integration">
+                    <div class="projectart broadcast" aria-hidden="true">
+                        <div class="flow">
+                            <div class="flowbox"><b>↗</b>LINE / 電話</div>
+                            <div class="flowline"></div>
+                            <div class="flowbox"><b>⌘</b>WPF 應用程式</div>
+                            <div class="flowline"></div>
+                            <div class="flowbox"><b>◖</b>語音廣播</div>
+                        </div><span class="artlabel">功能流程示意</span>
+                    </div>
+                    <div class="projectbody">
+                        <div class="projectmeta">03 — APPLICATION INTEGRATION</div>
+                        <h3>兒童放學接送廣播系統</h3>
+                        <p>串接 LINE Bot 與電話撥接訊號，以 WPF 記錄接送訊息，並將文字轉為語音播放至廣播系統。</p>
+                        <div class="tags"><span>C# WPF</span><span>LINE Bot API</span><span>文字轉語音</span></div>
+                        <div class="projectbottom"><span>在學期間 · 產學合作</span><button class="detailbtn"
+                                data-project="broadcast">查看專案介紹 ↗</button></div>
+                    </div>
+                </article>
+                <article class="project" data-category="web">
+                    <div class="projectart webart" aria-hidden="true">
+                        <div class="webmock"><span>ART / COMMUNITY / IDENTITY</span>
+                            <div class="gallery"><i></i><i></i><i></i></div><b>A place for stories.</b>
+                        </div><span class="artlabel">視覺概念示意 · 非實際網站畫面</span>
+                    </div>
+                    <div class="projectbody">
+                        <div class="projectmeta">04 — WEB DEVELOPMENT</div>
+                        <h3>形象網站與內容呈現</h3>
+                        <p>作品涵蓋靜鴻家園、102 畫廊與東門美術館等網站，將組織的資訊與需求轉化為網頁內容。</p>
+                        <div class="tags"><span>網站開發</span><span>前端介面</span><span>需求溝通</span></div>
+                        <div class="projectbottom"><span>專案作品 · 網站開發</span><button class="detailbtn"
+                                data-project="web">查看專案介紹 ↗</button></div>
+                    </div>
+                </article>
+            </div>
+            <div class="otherlinks"><span>作品連結</span><a href="https://maxpos.com.tw/" target="_blank"
+                    rel="noopener noreferrer">雲端釣蝦場 ↗</a><a href="http://www.tgbjh666.org.tw/" target="_blank"
+                    rel="noopener noreferrer">靜鴻家園 ↗</a><a href="https://102art-tw.com/102art/public/Index"
+                    target="_blank" rel="noopener noreferrer">102 畫廊 ↗</a><a href="https://www.liart1996.com/"
+                    target="_blank" rel="noopener noreferrer">東門美術館 ↗</a></div>
+        </section>
+        <section class="section experience" id="experience">
+            <div class="sectionhead">
+                <div class="eyebrow">02 / EXPERIENCE</div>
+                <h2>持續累積，<br>從開發到完整交付。</h2>
+                <p>在不同產業與專案情境中，學習理解需求、處理限制，並與團隊一起把系統做好。</p>
+            </div>
+            <div class="timeline">
+                <article class="job">
+                    <div class="jobtop">
+                        <h3>龍星顯示科技</h3><span class="current">目前任職</span>
+                    </div>
+                    <div class="jobtitle">軟體工程師 / 系統規劃・前後端開發</div>
+                    <p>與國外客戶及系統開發商討論需求，繪製系統流程圖與線框圖。以 ASP.NET Core 分層架構開發 API，處理裝置遙測、系統設定與資料同步，並規劃 SQL Server 資料結構與優化查詢。
+                    </p>
+                    <p>使用 Vue 3 與 TypeScript 開發管理後台，處理狀態管理、API 串接與錯誤流程；同時參與 Azure 環境設定、Docker 容器化與 CI/CD 流程調整。</p>
+                    <div class="tags"><span>ASP.NET Core</span><span>Vue
+                            3</span><span>TypeScript</span><span>Docker</span><span>Azure</span></div>
+                </article>
+                <article class="job">
+                    <div class="jobtop">
+                        <h3>鉅晨科技</h3><span>第二份工作</span>
+                    </div>
+                    <div class="jobtitle">軟體工程師 / 系統開發・技術研究</div>
+                    <p>參與 4 個專案，涵蓋資訊管理系統、Portal 與 POS。依專案需求進行開發、維護與新技術評估，並研究條碼掃描、列印及 Code 39 相關處理方式，改善程式與操作流程。</p>
+                    <div class="tags"><span>Laravel / PHP</span><span>JavaScript</span><span>C#</span><span>POS</span>
+                    </div>
+                </article>
+                <article class="job">
+                    <div class="jobtop">
+                        <h3>匯恆數位</h3><span>第一份工作 · 1 年</span>
+                    </div>
+                    <div class="jobtitle">軟體工程師 / 軟體開發・系統維護</div>
+                    <p>參與共 11 個系統的開發及專案維護，工作包含新功能實作、舊案翻新與系統維護，並長期於 Linux 伺服器環境工作。</p>
+                    <div class="tags"><span>Laravel /
+                            PHP</span><span>jQuery</span><span>WebSocket</span><span>Linux</span></div>
+                </article>
+            </div>
+        </section>
+        <section class="section" id="skills">
+            <div class="eyebrow">03 / CAPABILITIES</div>
+            <h2>技術之間，有完整的連結。</h2>
+            <div class="capabilities">
+                <div class="capability"><span class="num">01 / BACKEND</span>
+                    <h3>後端與系統設計</h3>
+                    <p>ASP.NET Core / C#<br>Laravel / PHP<br>RESTful API / 分層架構<br>資料流程與系統整合</p>
+                </div>
+                <div class="capability"><span class="num">02 / FRONTEND</span>
+                    <h3>前端與管理介面</h3>
+                    <p>Vue 3 / TypeScript<br>Vuex / JavaScript<br>HTML / CSS / Bootstrap<br>API 串接與狀態管理</p>
+                </div>
+                <div class="capability"><span class="num">03 / DATA & INFRA</span>
+                    <h3>資料與部署環境</h3>
+                    <p>SQL Server / MySQL<br>MongoDB / Linux<br>Azure / Docker<br>Git / GitHub / GitLab / CI/CD</p>
+                </div>
+                <div class="capability"><span class="num">04 / DELIVERY</span>
+                    <h3>需求到專案交付</h3>
+                    <p>需求討論與技術評估<br>系統流程圖 / 線框圖<br>WPF / Windows Forms<br>外包專案管理與協作</p>
+                </div>
+            </div>
+        </section>
+        <section class="about" id="about">
+            <div>
+                <div class="eyebrow">04 / A LITTLE ABOUT ME</div>
+                <h2>喜歡解決問題，<br>也樂於分享解法。</h2>
+                <p>我享受在遇到困難時，一層一層釐清原因、尋找解法，再將經驗分享給同事。除了功能實作，也重視程式可讀性、系統穩定性與後續維護。</p>
+                <p>從在學期間的產學合作，到企業系統與外包專案，持續透過實際需求探索技術，並在開發中實踐 Clean Code 與 SOLID 原則。</p>
+                <div class="principles"><span>Clean Code</span><span>SOLID</span><span>持續學習</span><span>團隊協作</span>
+                </div>
+            </div>
+            <div>
+                <details open>
+                    <summary>競賽與獲獎</summary>
+                    <ul>
+                        <li>IIIC 國際創新發明競賽 — 銀牌獎</li>
+                        <li>2020 全國大專院校產學創新實作競賽 — 最佳實作獎</li>
+                        <li>萬潤 2020 創新創意競賽 — 佳作</li>
+                        <li>智慧生活創新創業競賽 — 佳作</li>
+                        <li>2019 全國技專校院學生實務專題製作競賽暨成果展 — 入圍</li>
+                        <li>萬潤 2018 創新創意競賽 — 入圍</li>
+                    </ul>
+                </details>
+                <details>
+                    <summary>專業證照</summary>
+                    <ul>
+                        <li>數位電子技術士 — 乙級</li>
+                        <li>電腦軟體應用技術士 — 丙級</li>
+                        <li>工業電子技術士 — 丙級</li>
+                        <li>TQC 網頁設計</li>
+                        <li>TQC 網頁程式設計</li>
+                    </ul>
+                </details>
+                <details>
+                    <summary>其他專案經驗</summary>
+                    <ul>
+                        <li>水土保持技師公會相關專案</li>
+                        <li>大榮化工形象官網</li>
+                        <li>WolfPack 狼群 App 線上課程 RESTful API</li>
+                        <li>蓆之匠形象官網</li>
+                    </ul>
+                </details>
+            </div>
+        </section>
+        <section class="contact" id="contact">
+            <div>
+                <div class="eyebrow">LET’S BUILD SOMETHING USEFUL.</div>
+                <h2>讓好的需求，有好的實現。</h2>
+                <p>想更了解我的開發經驗與作品？<br>歡迎進一步查看專案紀錄。</p>
+            </div><a class="btn primary"
+                href="https://docs.google.com/document/d/1Hf-56RxXej8uBkltX9zXypDuUrGpB5Ku/edit" target="_blank"
+                rel="noopener noreferrer">查看完整作品紀錄 <span>↗</span></a>
+        </section>
+    </main>
+    <footer class="wrap">
+        <div class="footer"><span>© <span id="year">2026</span> Huang Yu-xiang. Built with care.</span><a
+                href="#home">回到頂端 ↑</a><span>需求規劃 → 系統開發 → 部署交付</span></div>
+    </footer>
+    <dialog id="projectDialog" aria-labelledby="dialogTitle"><button class="dialogclose" aria-label="關閉專案介紹">×</button>
+        <div class="eyebrow" id="dialogCategory"></div>
+        <h2 id="dialogTitle"></h2>
+        <div id="dialogBody"></div>
+        <div class="dialoglinks" id="dialogLinks"></div>
+    </dialog>
+    <script>
+        const menu = document.querySelector('.menu'), nav = document.querySelector('.navlinks');
+        menu.addEventListener('click', () => {const open = menu.getAttribute('aria-expanded') !== 'true'; menu.setAttribute('aria-expanded', String(open)); nav.classList.toggle('open', open)});
+        nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {menu.setAttribute('aria-expanded', 'false'); nav.classList.remove('open')}));
+        document.querySelectorAll('.filter').forEach(button => button.addEventListener('click', () => {document.querySelectorAll('.filter').forEach(b => b.setAttribute('aria-pressed', String(b === button))); document.querySelectorAll('.project').forEach(card => card.hidden = button.dataset.filter !== 'all' && card.dataset.category !== button.dataset.filter)}));
+        const projects = {device: {category: 'SYSTEM PLATFORM / 團隊專案', title: '裝置與內容管理平台', sections: [['專案情境', '於龍星顯示科技參與多個裝置管理、內容管理與資料同步相關專案，處理裝置回傳的遙測資訊與系統設定。'], ['我的參與', '與國外客戶及系統開發商討論需求，繪製流程圖與線框圖；規劃資料流程、開發 ASP.NET Core API 與 Vue 3 管理後台，並參與部署與環境設定。'], ['技術與實作重點', '以分層架構組織後端服務，搭配 SQL Server 資料結構規劃與查詢優化。前端以 Vue 3、TypeScript 處理資料呈現、狀態管理與錯誤流程，部署涉及 Azure、Docker 與 CI/CD。'], ['展示說明', '此處整合相關專案經驗，頁面圖像為概念示意，不含公司內部產品畫面或未公開資料。']], links: []}, pos: {category: 'BUSINESS APPLICATION / 外包專案', title: '雲端釣蝦場管理系統', sections: [['專案背景', '雲端釣蝦場管理系統為參與的外包專案之一，聚焦於使用者的營運與管理需求。'], ['參與方式', '透過需求溝通理解使用情境，參與系統開發與專案交付。'], ['展示說明', '本頁依已提供的專案資訊整理，未將其他 POS 專案的功能或技術歸入此專案。介面為概念示意。']], links: [['查看專案網站', 'https://maxpos.com.tw/']]}, broadcast: {category: 'APPLICATION INTEGRATION / 產學合作', title: '兒童放學接送廣播系統', sections: [['要解決的問題', '依合作需求，將家長接送訊息轉換成可記錄、可廣播的通知流程。'], ['訊號與資料流程', '以 LINE Bot API 或電話撥接方式傳送訊號至電腦，透過 C# WPF 應用程式接收訊號並記錄接送訊息，再將文字轉換成語音播放至廣播系統。'], ['技術重點', '整合外部訊號、桌面應用程式、資料記錄與語音播放，讓不同介面能串接成完整流程。']], links: []}, web: {category: 'WEB DEVELOPMENT / 網站作品', title: '形象網站與內容呈現', sections: [['專案範圍', '網站作品包含靜鴻家園、102 畫廊與東門美術館，涵蓋組織介紹與內容呈現等需求。'], ['開發與合作', '透過專案需求溝通，參與網站開發，將資訊轉換為可瀏覽的網頁內容。'], ['展示說明', '各網站的詳細分工與技術未逐一列明，這裡保留作品連結供進一步查看。卡片圖像為視覺概念示意。']], links: [['靜鴻家園', 'http://www.tgbjh666.org.tw/'], ['102 畫廊', 'https://102art-tw.com/102art/public/Index'], ['東門美術館', 'https://www.liart1996.com/']]}};
+        const dialog = document.querySelector('dialog'); document.querySelectorAll('[data-project]').forEach(button => button.addEventListener('click', () => {const p = projects[button.dataset.project]; document.getElementById('dialogCategory').textContent = p.category; document.getElementById('dialogTitle').textContent = p.title; const body = document.getElementById('dialogBody'); body.replaceChildren(); p.sections.forEach(([title, text]) => {const h = document.createElement('h3'), para = document.createElement('p'); h.textContent = title; para.textContent = text; body.append(h, para)}); const links = document.getElementById('dialogLinks'); links.replaceChildren(); p.links.forEach(([label, url]) => {const a = document.createElement('a'); a.textContent = label + ' ↗'; a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer'; links.append(a)}); dialog.showModal(); dialog.scrollTop = 0})); document.querySelector('.dialogclose').addEventListener('click', () => dialog.close()); dialog.addEventListener('click', event => {if (event.target === dialog) {const r = dialog.getBoundingClientRect(); if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close()} }); document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+
+</html>
